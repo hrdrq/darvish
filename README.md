@@ -19,3 +19,6 @@ rake db:seed
 rails s
 
 ```
+
+### Screenshot
+![](https://raw.githubusercontent.com/hrdrq/darvish/master/screenshot.png)
