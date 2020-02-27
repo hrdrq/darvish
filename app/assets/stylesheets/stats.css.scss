@@ -1,0 +1,55 @@
+$iphone-width:640px;
+$ipad-width:10240px;
+td,th {
+  text-align: center !important; 
+}
+#stats-mlb,#stats-npb {
+  background: linear-gradient(#fff, #F0F0ED);
+  .stats-detail {
+    padding: 0 15px 0 15px;
+    margin: 20px 0 60px 0;
+  }
+  tr.total,tr.average {
+    font-weight: bolder;
+  }
+}
+
+.stats-league-title {
+  text-align: center;
+    h1 {
+      font-size: 5em;
+      font-weight: bold;
+      @media screen and (max-width: $iphone-width) {
+        font-size: 3em;
+      }
+    }
+}
+
+
+
+
+.stats-year-title {
+  background: #DDDDDB;
+  h2 {
+    margin-left: 10px;
+    font-weight: bolder;
+  }
+}
+
+table.stats {
+  width: 100%;
+  tr.detail:hover{
+    background: #DDDDDB;
+  }
+}
+
+.hide-detail {
+  font-size: 1.4em;
+  cursor: pointer;
+  cursor: hand; 
+  display: inline-block;
+  margin-bottom: 8px;
+  span {
+    float: left;
+  }
+}

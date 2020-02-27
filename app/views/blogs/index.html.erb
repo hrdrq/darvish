@@ -1,0 +1,90 @@
+<%
+  if params.has_key?(:year)
+    content_for :title, "#{params[:year]}年"
+  end
+  content_for :title, "網誌"
+%>
+<%= render 'banner' %>
+<div class="row blog-main">    
+  <%= render 'sidebar' %>
+  <div class="medium-9 columns blog-list">
+    <%# if params.has_key?(:year) %> <% if 1==0 %>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/1">1月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/2">2月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/3">3月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/4">4月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/5">5月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/6">6月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/7">7月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/8">8月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/9">9月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/10">10月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/11">11月</a></span>
+      <span class="secondary label"><a href="/blog/<%= params[:year] %>/12">12月</a></span>
+      </br>
+    <% end %>
+    <% if user_signed_in? %>
+      <% if current_user.has_role? :admin %>
+      <div><%= link_to "新增網誌", new_blog_path %></div>
+      <% end %>
+    <% end %> 
+    
+    <% if @blogs.blank? %>
+      本日期沒有文章
+    <% else %>
+      <% @blogs.each do |blog| %>
+        <%
+          content_modified = Nokogiri::HTML.fragment(blog.content) 
+          content_modified.css('p.img').remove 
+          content_modified.css('p:nth-child(n+4),t.jp').remove 
+          content_modified.css('p').each do |node_p|
+            node = node_p.at('t')
+              unless node.nil?
+              node.children.each do |child|
+                node.parent << child
+              end 
+              node.remove
+            end
+          end
+          
+          content_modified.css('onpu,nihihi,niko,up,shock,punch,ase,aseru,down,beda,exc,gan,love,shobon,good,hare,koinoya,ame,pa,dash,kao,bikuri,crack,me,hatena,mu,gokaku,choki,rocket,mera,gugu,yuki,doki,kesho,heartbreak,lovelove,excque,muka,bomb,don,kiss,hirameki,dokuro,oyobi,pun,sira,et,kaze,tokuige,mimi,guu,asi').remove 
+          title_modified = Nokogiri::HTML.fragment(blog.title) 
+          title_modified.css('t.jp').remove 
+          node = title_modified.at('t')
+          
+          node.children.each do |child|
+            node.parent << child
+          end
+          node.remove
+
+          nodes = content_modified.css('a')
+          unless nodes.nil?
+            nodes.each do |node|
+              node.children.each do |child|
+                node.after(child)
+              end
+              node.remove
+            end
+          end
+        %>
+        <div class="blog-list-article">
+          <div class="entry-title">
+            <%= link_to title_modified.to_html.html_safe, blog_path(blog) %>  
+          </div>
+          <div class="entry-meta">
+            <%= blog.dt %>
+          </div>
+          <div class="entry-content">
+            <%= content_modified.to_html.html_safe %>
+          </div>
+          <div class="continue-reading">
+            <%= link_to "閱讀全文 →", blog_path(blog) %> 
+          </div>
+          
+
+        </div>
+      <% end %>
+      <%= paginate @blogs , :window => 2 %>
+    <% end %>
+  </div>
+</div>

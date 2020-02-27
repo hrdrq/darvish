@@ -1,0 +1,15 @@
+<div class="comment">
+  <div class="comment-header">
+    <div class="comment-name"><%= comment.name %></div>
+    <div class="comment-time"><%= comment.created_at.in_time_zone("Taipei").strftime("%F %r ") %></div>
+    <% if user_signed_in? %>
+      <% if current_user.has_role? :admin %>
+        <div>
+          <%= link_to '編輯', edit_comment_path(comment) %>
+          <%= link_to '刪除', comment, method: :delete, :remote => true, :disable_with => "刪除中", data: { confirm: 'Are you sure?' }, style: 'margin-left:20px' %>
+        </div>
+      <% end %>
+    <% end %> 
+  </div>
+  <div class="comment-content"><%= comment.content %></div>
+</div>

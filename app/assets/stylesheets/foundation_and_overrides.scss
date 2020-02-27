@@ -1,0 +1,38 @@
+// Foundation Sass Variables Go Here!
+// More information about Foundation + Sass can be found here:
+// http://foundation.zurb.com/docs/
+
+$include-open-sans: false;
+$topbar-media-query: "only screen";
+$topbar-arrows: false;
+$tabs-navigation-padding: 0.5rem;
+$tabs-navigation-font-size: 0.7em;
+$topbar-bg: #003278;
+$topbar-link-bg-hover: #C0111F;
+$topbar-divider-border-bottom: solid 1px darken($topbar-bg, 5%);
+$topbar-divider-border-top: solid 1px darken($topbar-bg, 10%);
+$topbar-dropdown-bg: $topbar-bg;
+$topbar-dropdown-link-bg: lighten($topbar-bg, 5%);
+$tabbar-bg: $topbar-bg;
+$table-head-padding: 4px 2px 4px 2px;
+$table-row-padding: 4px 2px 4px 2px;
+$off-canvas-width: 100px ;
+$tabbar-height: 2.5rem;
+
+@import 'foundation';
+
+section.left-small {
+	border-right: 0;
+	box-shadow: 0 0 0 ;
+	left: 0;
+}
+section.right-small {
+	border-left: solid 0;
+	box-shadow: 0 0 0 ;
+	right: 0;
+}
+
+ body {
+  background-color: #F0F0ED;
+ }
+ 

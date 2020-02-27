@@ -1,0 +1,8 @@
+<%= simple_form_for @blog do |form| %>
+    <%= form.input :id, autofocus: true, label: 'id' %>
+    <%= form.input :dt, label: '日期' %>
+    <%= form.input :url, label: '網址' %>
+    <%= form.input :title, label: '標題'%>
+    <%= form.input :content, as: :text , label: '內容'%>
+    <%= form.button :submit, '送出', class: 'submit' %>
+<% end %>

@@ -1,0 +1,400 @@
+<% content_for :title, "數據" %>
+<% 
+  mlb_team_name = {"LAA"=>"天使","HOU"=>"太空人","OAK"=>"運動家","TOR"=>"藍鳥","ATL"=>"勇士","MIL"=> "釀酒人","STL"=>"紅雀","CHC"=>"小熊","TB"=>"光芒","ARI"=>"響尾蛇","LAD"=>"道奇","SF"=>"巨人","CLE"=>"印地安人","SEA"=>"水手","FLA"=>"馬林魚","MIA"=>"馬林魚","NYM"=>"大都會","WSH"=>"國民","BAL"=>"金鶯","SD"=>"教士","PHI"=>"費城人","PIT"=>"海盜","TEX"=>"遊騎兵","BOS"=>"紅襪","CIN"=>"紅人","COL"=>"落磯","KC"=>"皇家","DET"=>"老虎","MIN"=>"雙城","CWS"=>"白襪","NYY"=>"洋基"} 
+%>
+<%# 
+  npb_team_name = {"Seibu"=>"西武獅","Rakuten"=>"樂天金鷹","SoftBank"=>"軟體銀行鷹","Orix"=>"歐力士野牛","Lotte"=>"羅德海洋","Hanshin"=>"阪神虎","Chunichi"=>"中日龍","Yakult"=>"養樂多燕子","Yokohama"=>"橫濱海灣星","Hiroshima"=>"東洋鯉魚","Yomiuri"=>"讀賣巨人","Ham"=>"日本火腿鬥士"}
+%>
+<% 
+  npb_team_name = {"Seibu"=>"西武","Rakuten"=>"樂天","SoftBank"=>"軟銀","Orix"=>"歐力士","Lotte"=>"羅德","Hanshin"=>"阪神","Chunichi"=>"中日","Yakult"=>"養樂多","Yokohama"=>"橫濱","Hiroshima"=>"廣島","Yomiuri"=>"巨人","Ham"=>"火腿"}
+%>
+<section id="stats-banner">
+    <div class="row">
+    <div class="medium-12 columns">
+      <h1>達比修有投球數據</h1><br>
+      <h4>職棒生涯數據紀錄</h4>
+    </div>
+  </div>
+</section>
+<section id="stats-mlb">
+  <% if user_signed_in? %>
+    <% if current_user.has_role? :admin %>
+    <div><%= link_to "新增紀錄", new_record_path %></div>
+    <% end %>
+  <% end %> 
+  
+  <div class="row s">
+    <div class="stats-league-title"><h1>MLB</h1></div>
+    <% first = 0 %>
+    <% 2014.downto 2012 do |year| %>
+      <div class="stats-year-title"><h2><%= year %></h2></div>
+      <div class="stats-detail" id="flip-scroll">
+        <% for type in 0..2 %>
+
+              <% 
+                
+                  case type
+                    when 0 #postseason
+                      stats = Record.where(:dt.lte => "#{year}-12-31", :dt.gte => "#{year}-1-1").any_of({:type => "wc"},{:type => "ds"},{:type => "lcs"},{:type => "ws"}).desc(:dt).entries 
+                    when 1 #regular
+                      stats = Record.where(:dt.lte => "#{year}-12-31", :dt.gte => "#{year}-1-1", :type => "r").desc(:dt).entries 
+                    when 2 #spring
+                      stats = Record.where(:dt.lte => "#{year}-12-31", :dt.gte => "#{year}-1-1", :type => "s").desc(:dt).entries 
+                  end
+                
+              %>
+              <% unless stats.blank? %>
+                <%
+                  case type
+                    when 0 #postseason
+                      type_string = "季後賽" 
+                    when 1 #regular
+                      type_string = "例行賽" 
+                    when 2 #spring
+                      type_string = "春訓賽"  
+                  end
+                %>
+
+                
+                <%# if first == 0 %>
+                  <%#span class="hide-detail">
+                  
+                <%# else %>
+                  <span class="hide-detail clicked">
+                <%# end %>
+                <span>[+]</span><%= type_string %></span>
+                <table class="stats responsive" data-fixed-cols="2">
+                  <thead>
+                    <tr>
+                      <th>日期</th>
+                      <th>對手</th>
+                      <th>勝負</th>
+                      <th>先發</th>
+                      <th>完投</th>
+                      <th>完封</th>
+                      <th>局數</th>
+                      <th>安打</th>
+                      <th>失分</th>
+                      <th>責失</th>
+                      <th>全壘打</th>
+                      <th>觸身</th>
+                      <th>四壞</th>
+                      <th>三振</th>
+                      <th>球數(好球)</th>
+                      <th>ERA</th>
+                      <th>WHIP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <%
+                    type_games=type_home=type_road=type_start=type_win=type_lost=type_cg=type_sho=type_sv=type_svo=type_hit=type_run=type_er=type_hr=type_hb=type_bb=type_ibb=type_so=type_np=type_np_s=type_ip=type_ip_f = 0
+                    type_era=type_whip=0.0
+                  %>
+                  <% stats.each do |s| %>
+                    <%# Rails.logger.debug "@stats is: #{stats.class}" %>
+                    <%# if first == 0 %>
+                      <%#tr class="detail">
+                    <% else %>
+                      <tr class="detail" style="display:none">
+                    <%# end %>
+                    
+                      <td>
+                        <% if user_signed_in? %>
+                          <% if current_user.has_role? :admin %>
+                            <div><%= link_to '修改', edit_record_path(s) %><%= link_to '刪除', s, method: :delete, data: { confirm: '確定嗎？' } , style: "margin-left:20px;"%></div>
+                          <% end %>
+                        <% end %>
+                        <%= s.dt.strftime("%m/%d/%y") %>
+                      </td>
+                      <td><%= s.home?? "" : "@" %><%= mlb_team_name[s.opp] %></td>
+                      <td><% if s.win==0 %> 無關 <% elsif s.win==1 %> 勝 <% else %> 敗 <% end %></td>
+                      <td><%= s.start?? "是" : "否"%></td>
+                      <td><%= s.cg?? "是" : "否"%></td>
+                      <td><%= s.sho?? "是" : "否"%></td>
+                      <td><%= s.ip %><%=(s.ip_f==0)? "" : ("."+s.ip_f.to_s ) %></td>
+                      <td><%= s.hit %></td>
+                      <td><%= s.run %></td>
+                      <td><%= s.er %></td>
+                      <td><%= s.hr %></td>
+                      <td><%= s.hb %></td>
+                      <td><%= s.bb %></td>
+                      <td><%= s.so %></td>
+                      <td><%= s.np  %>(<%= s.np_s %>)</td>
+                      <td><%= s.era.round(2) %></td>
+                      <td><%= s.whip.round(2) %></td>
+                    </tr>
+                    <%
+                       #games
+                       # type_games +=1
+                        
+                      #home/road
+                        if s.home
+                          type_home += 1
+                        else
+                          type_road +=1
+                        end
+                      #start
+                        if s.start
+                          type_start +=1
+                        end
+                      #win/lost
+                        if s.win == 1
+                          type_win +=1
+                        elsif s.win == -1
+                          type_lost +=1
+                        end
+                      #cg
+                        if s.cg
+                          type_cg +=1
+                        end
+                      #sho
+                        if s.sho
+                          type_sho +=1
+                        end
+                      #ip
+                        type_ip += s.ip
+                        type_ip_f += s.ip_f
+                      #hit
+                        type_hit += s.hit
+                      #run
+                        type_run += s.run
+                      #er
+                        type_er += s.er
+                      #hr
+                        type_hr += s.hr
+                      #hb
+                        type_hb += s.hb
+                      #bb
+                        type_bb += s.bb
+                      #ibb
+                        type_ibb += s.ibb
+                      #so
+                        type_so += s.so
+                      #np
+                        type_np += s.np
+                      #np_s
+                        type_np_s += s.np_s
+                    %>
+                  <% end %>
+                  <% type_games = stats.length %>
+                  <tr class ="total">
+                    <td><%= "合計(#{type_games}場)" %></td>
+                    <td><%= "#{type_home}-#{type_road}(主-客)" %></td>
+                    <td><%= "#{type_win}-#{type_lost}(勝-敗)" %></td>
+                    <td><%= type_start %></td>
+                    <td><%= type_cg %></td>
+                    <td><%= type_sho %></td>
+                    <td><%= type_ip+type_ip_f/3 %><%=(type_ip_f%3==0)? "" : ("."+(type_ip_f%3).to_s ) %></td>
+                    <td><%= type_hit %></td>
+                    <td><%= type_run %></td>
+                    <td><%= type_er %></td>
+                    <td><%= type_hr %></td>
+                    <td><%= type_hb %></td>
+                    <td><%= type_bb %></td>
+                    <td><%= type_so %></td>
+                    <td><%= type_np  %>(<%= type_np_s %>)</td>
+                    <td><%= (type_er*9/(type_ip+type_ip_f/3.0)).round(2) %></td>
+                    <td><%= ((type_hit+type_bb)/(type_ip+type_ip_f/3.0)).round(2) %></td>
+                  </tr>
+                  <tr class ="average">
+                    <td><%= "平均" %></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><%= (type_ip*3+type_ip_f)/type_games/3 %><%= ".#{((type_ip*3+type_ip_f)/type_games%3).to_s}"  %></td>
+                    <td><%= (1.0*type_hit/type_games).round(2) %></td>
+                    <td><%= (1.0*type_run/type_games).round(2) %></td>
+                    <td><%= (1.0*type_er/type_games).round(2) %></td>
+                    <td><%= (1.0*type_hr/type_games).round(2) %></td>
+                    <td><%= (1.0*type_hb/type_games).round(2) %></td>
+                    <td><%= (1.0*type_bb/type_games).round(2) %></td>
+                    <td><%= (1.0*type_so/type_games).round(2) %></td>
+                    <td><%= (1.0*type_np/type_games).round(2)  %>(<%= (1.0*type_np_s/type_games).round(2) %>)</td>
+                    <td><br></td>
+                    <td><br></td>
+                  </tr>
+              </tbody>
+             </table>
+             <%# if first == 0 %>
+              <%# first = 1 %>
+            <%# end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
+<section id="stats-npb">
+  <div class="row s">
+    <div class="stats-league-title"><h1>NPB</h1></div>
+    <% 2011.downto 2005 do |year| %>
+      <div class="stats-year-title"><h2><%= year %></h2></div>
+      <div class="stats-detail" id="flip-scroll">
+        <% for type in 0..1 %>
+
+              <% 
+                
+                  case type
+                    when 0 #postseason
+                      stats = Record.where(:dt.lte => "#{year}-12-31", :dt.gte => "#{year}-1-1").any_of({:type => "cs1"},{:type => "cs2"},{:type => "ns"}).desc(:dt).entries 
+                    when 1 #regular
+                      stats = Record.where(:dt.lte => "#{year}-12-31", :dt.gte => "#{year}-1-1", :type => "r").desc(:dt).entries 
+                  end
+                
+              %>
+              <% unless stats.blank? %>
+                <%
+                  case type
+                    when 0 #postseason
+                      type_string = "季後賽" 
+                    when 1 #regular
+                      type_string = "例行賽" 
+                  end
+                %>
+                <span class="hide-detail clicked"><span>[+]</span><%= type_string %></span>
+                <table class="stats responsive" data-fixed-cols="2">
+                  <thead>
+                    <tr>
+                      <th>日期</th>
+                      <th>對手</th>
+                      <th>勝負</th>
+                      <th>先發</th>
+                      <th>完投</th>
+                      <th>完封</th>
+                      <th>局數</th>
+                      <th>安打</th>
+                      <th>失分</th>
+                      <th>責失</th>
+                      <th>全壘打</th>
+                      <th>觸身</th>
+                      <th>四壞</th>
+                      <th>三振</th>
+                      <th>ERA</th>
+                      <th>WHIP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <%
+                    type_games=type_home=type_road=type_start=type_win=type_lost=type_cg=type_sho=type_sv=type_svo=type_hit=type_run=type_er=type_hr=type_hb=type_bb=type_ibb=type_so=type_np=type_np_s=type_ip=type_ip_f = 0
+                    type_era=type_whip=0.0
+                  %>
+                  <% stats.each do |s| %>
+                    <%# Rails.logger.debug "@stats is: #{stats.class}" %>
+                    <tr class="detail" style="display:none">
+                      <td><%= s.dt.strftime("%m/%d/%y") %></td>
+                      <td><%= s.home?? "" : "@" %><%= npb_team_name[s.opp] %></td>
+                      <td><% if s.win==0 %> 無關 <% elsif s.win==1 %> 勝 <% else %> 敗 <% end %></td>
+                      <td><%= s.start?? "是" : "否"%></td>
+                      <td><%= s.cg?? "是" : "否"%></td>
+                      <td><%= s.sho?? "是" : "否"%></td>
+                      <td><%= s.ip %><%=(s.ip_f==0)? "" : ("."+s.ip_f.to_s ) %></td>
+                      <td><%= s.hit %></td>
+                      <td><%= s.run %></td>
+                      <td><%= s.er %></td>
+                      <td><%= s.hr %></td>
+                      <td><%= s.hb %></td>
+                      <td><%= s.bb %></td>
+                      <td><%= s.so %></td>
+                      <td><%= s.era.round(2) %></td>
+                      <td><%= s.whip.round(2) %></td>
+                    </tr>
+                    <%
+                       #games
+                       # type_games +=1
+                        
+                      #home/road
+                        if s.home
+                          type_home += 1
+                        else
+                          type_road +=1
+                        end
+                      #start
+                        if s.start
+                          type_start +=1
+                        end
+                      #win/lost
+                        if s.win == 1
+                          type_win +=1
+                        elsif s.win == -1
+                          type_lost +=1
+                        end
+                      #cg
+                        if s.cg
+                          type_cg +=1
+                        end
+                      #sho
+                        if s.sho
+                          type_sho +=1
+                        end
+                      #ip
+                        type_ip += s.ip
+                        type_ip_f += s.ip_f
+                      #hit
+                        type_hit += s.hit
+                      #run
+                        type_run += s.run
+                      #er
+                        type_er += s.er
+                      #hr
+                        type_hr += s.hr
+                      #hb
+                        type_hb += s.hb
+                      #bb
+                        type_bb += s.bb
+                      #ibb
+                      #  type_ibb += s.ibb
+                      #so
+                        type_so += s.so
+                      #np
+                      #  type_np += s.np
+                      #np_s
+                      #  type_np_s += s.np_s
+                    %>
+                  <% end %>
+                  <% type_games = stats.length %>
+                  <tr class ="total">
+                    <td><%= "合計(#{type_games}場)" %></td>
+                    <td><%= "#{type_home}-#{type_road}(主-客)" %></td>
+                    <td><%= "#{type_win}-#{type_lost}(勝-敗)" %></td>
+                    <td><%= type_start %></td>
+                    <td><%= type_cg %></td>
+                    <td><%= type_sho %></td>
+                    <td><%= type_ip+type_ip_f/3 %><%=(type_ip_f%3==0)? "" : ("."+(type_ip_f%3).to_s ) %></td>
+                    <td><%= type_hit %></td>
+                    <td><%= type_run %></td>
+                    <td><%= type_er %></td>
+                    <td><%= type_hr %></td>
+                    <td><%= type_hb %></td>
+                    <td><%= type_bb %></td>
+                    <td><%= type_so %></td>
+                    <td><%= (type_er*9/(type_ip+type_ip_f/3.0)).round(2) %></td>
+                    <td><%= ((type_hit+type_bb)/(type_ip+type_ip_f/3.0)).round(2) %></td>
+                  </tr>
+                  <tr class ="average">
+                    <td><%= "平均" %></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><br></td>
+                    <td><%= (type_ip*3+type_ip_f)/type_games/3 %><%= ".#{((type_ip*3+type_ip_f)/type_games%3).to_s}"  %></td>
+                    <td><%= (1.0*type_hit/type_games).round(2) %></td>
+                    <td><%= (1.0*type_run/type_games).round(2) %></td>
+                    <td><%= (1.0*type_er/type_games).round(2) %></td>
+                    <td><%= (1.0*type_hr/type_games).round(2) %></td>
+                    <td><%= (1.0*type_hb/type_games).round(2) %></td>
+                    <td><%= (1.0*type_bb/type_games).round(2) %></td>
+                    <td><%= (1.0*type_so/type_games).round(2) %></td>
+                    <td><br></td>
+                    <td><br></td>
+                  </tr>
+              </tbody>
+             </table>
+              <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

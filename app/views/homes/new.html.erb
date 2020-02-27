@@ -1,0 +1,134 @@
+<% mlb_team_name = {"LAA"=>"天使","HOU"=>"太空人","OAK"=>"運動家","TOR"=>"藍鳥","ATL"=>"勇士","MIL"=> "釀酒人","STL"=>"紅雀","CHC"=>"小熊","TB"=>"光芒","ARI"=>"響尾蛇","LAD"=>"道奇","SF"=>"巨人","CLE"=>"印地安人","SEA"=>"水手","FLA"=>"馬林魚","MIA"=>"馬林魚","NYM"=>"大都會","WSH"=>"國民","BAL"=>"金鶯","SD"=>"教士","PHI"=>"費城人","PIT"=>"海盜","TEX"=>"遊騎兵","BOS"=>"紅襪","CIN"=>"紅人","COL"=>"落磯","KC"=>"皇家","DET"=>"老虎","MIN"=>"雙城","CWS"=>"白襪","NYY"=>"洋基"} %>
+<section id="homepage-banner">
+    <div class="row">
+    <div class="medium-12  columns">
+      <h1>達比修有台灣粉絲網</h1><br>
+      <h4>獻給喜歡達比修有的球迷朋友們。</h4>
+    </div>
+  </div>
+</section>
+
+<section id="homepage-main-content">
+
+  <div class="row homepage-stats">
+    <h2>最新戰績</h2>
+    <div class="large-12 columns">
+      
+      <div class="homepage-stats-table">
+        <table class="responsive" data-fixed-cols="2">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>對手</th>
+              <th>類型</th>
+              <th>勝負</th>
+              <th>先發</th>
+              <th>完投</th>
+              <th>完封</th>
+              <th>局數</th>
+              <th>安打</th>
+              <th>失分</th>
+              <th>責失</th>
+              <th>全壘打</th>
+              <th>觸身</th>
+              <th>四壞</th>
+              <th>三振</th>
+              <th>球數(好球)</th>
+              <th>ERA</th>
+              <th>WHIP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @newst_stats.each do |s| %>
+              <%# Rails.logger.debug "@stats is: #{stats.class}" %>
+              <tr class="detail">
+                <td><%= s.dt %></td>
+                <td><%= s.home?? "" : "@" %><%= mlb_team_name[s.opp] %></td>
+                <td>
+                  <% case s.type %>
+                    <% when "wc","ds","lcs","ws" %>
+                      季後賽
+                    <% when "r" %>
+                      例行賽
+                    <% when "s" %>
+                      春訓賽
+                  <% end %>
+                </td>
+                <td><% if s.win==0 %> 無關 <% elsif s.win==1 %> 勝 <% else %> 敗 <% end %></td>
+                <td><%= s.start?? "是" : "否"%></td>
+                <td><%= s.cg?? "是" : "否"%></td>
+                <td><%= s.sho?? "是" : "否"%></td>
+                <td><%= s.ip %><%=(s.ip_f==0)? "" : ("."+s.ip_f.to_s ) %></td>
+                <td><%= s.hit %></td>
+                <td><%= s.run %></td>
+                <td><%= s.er %></td>
+                <td><%= s.hr %></td>
+                <td><%= s.hb %></td>
+                <td><%= s.bb %></td>
+                <td><%= s.so %></td>
+                <td><%= s.np  %>(<%= s.np_s %>)</td>
+                <td><%= s.era.round(2) %></td>
+                <td><%= s.whip.round(2) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>   
+      </div>   
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <hr>
+    </div>
+  </div>
+
+  <div class="row homepage-blog">
+    <h2>最新網誌</h2>
+    
+      
+      <% @newst_blog.each do |blog| 
+
+        content_modified = Nokogiri::HTML.fragment(blog.content) 
+        content_modified.css('p.img').remove 
+        content_modified.css('p:nth-child(n+4),t.jp').remove 
+        content_modified.css('p').each do |node_p|
+          node = node_p.at('t')
+            unless node.nil?
+            node.children.each do |child|
+              node.parent << child
+            end 
+            node.remove
+          end
+        end
+        
+        content_modified.css('onpu,nihihi,niko,up,shock,punch,ase,aseru,down,beda,exc,gan,love,shobon,good,hare,koinoya,ame,pa,dash,kao,bikuri,crack,me,hatena,mu,gokaku,choki,rocket,mera,gugu,yuki,doki,kesho').remove 
+        title_modified = Nokogiri::HTML.fragment(blog.title) 
+        title_modified.css('t.jp').remove 
+        node = title_modified.at('t')
+        
+        node.children.each do |child|
+          node.parent << child
+        end
+        node.remove
+      %>
+      <div class="medium-4 columns">
+        <div class="panel">
+          <h3><%= link_to title_modified.to_html.html_safe, blog_path(blog) %>  </h3>
+          <h4><%= blog.dt %></h4>
+          <div class="content"><%= content_modified.to_html.html_safe %></div>
+          <div class="continue-reading">
+            <%= link_to "閱讀全文 →", blog_path(blog) %> 
+          </div>
+        </div>
+      </div>
+      <% end %>
+      
+
+  </div>
+    
+  
+
+  
+</section>
+  

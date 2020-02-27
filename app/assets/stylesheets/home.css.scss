@@ -1,0 +1,54 @@
+
+
+#homepage-main-content {
+	margin-top: 40px;
+
+	h2 {
+		font-weight: bold;
+		letter-spacing: 5px;
+		@media only screen and (max-width: 40em) {
+			letter-spacing: 0;
+			text-align: center;
+		}
+	}
+	.homepage-stats-table {
+		margin-top: 10px;
+		table {
+			width: 100%;
+		}
+	}
+	.homepage-blog {
+		h2 {
+			margin-bottom: 20px;
+		}
+		.panel {
+			background: white;
+
+			h3 {
+				a {
+					color: #222222;;
+				}
+				a:hover {
+					color: #D24D33;
+
+				}
+			}
+			h4 {
+				color: #3B8DBD;
+				font-size: 18px;
+				margin:10px 0 22px 0;
+
+			}
+			.content {
+				color: #666;
+				font-size: 22px;
+				p {
+					margin-top: -14px;
+				}
+			}
+		}
+	}
+	hr {
+		border:0; height:3px; background-color:#DDDDDB;
+	}
+}

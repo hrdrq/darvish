@@ -1,0 +1,18 @@
+<%= render "contacts/banner" %>
+<section class="view-pages" id="pages-contact">
+  <div class="row">
+    <div class="medium-12 columns">  
+    	<%= render 'layouts/messages' %> 
+		<h2>聯絡資料</h2>
+		<div class="content">
+			<%= simple_form_for @contact do |form| %>
+				<%= form.error_notification %>
+			    <%= form.input :name, autofocus: true, label: '姓名' %>
+			    <%= form.input :email %>
+			    <%= form.input :content, as: :text , label: '內容'%>
+			    <%= form.button :submit, '送出', class: 'submit' %>
+			<% end %>
+		</div>
+    </div>
+  </div>
+</section>  

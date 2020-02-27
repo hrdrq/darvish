@@ -1,0 +1,36 @@
+$background_color:#33363B;
+$font_color:#959B9D;
+$font_hover_color:#FFF;
+footer {
+	margin-top: 15px;
+	padding: 18px 0 26px 0;
+	background: $background_color;
+	color:$font_color;
+	a {
+		color:inherit;
+	}
+	a:hover {
+		color:$font_hover_color;
+	}
+
+	#copyright {
+		color: #666;
+		font-size: 0.8em;
+	}
+	#social {
+		.inline-list {
+			margin: 0;
+		}
+		.inline-list > li {
+		    margin-left: 0;
+		}
+	}
+	.columns {
+		@media only screen and (max-width: 40em) {
+			text-align: center;
+			ul {
+				display: inline-block;
+			}
+		}
+	}
+}

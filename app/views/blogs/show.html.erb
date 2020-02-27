@@ -1,0 +1,76 @@
+<% 
+  title = Nokogiri::HTML.fragment(@blog.title) 
+  content_for :title, "#{title.css('.tw').text()} - 網誌" 
+%>
+<div id="fb-root"></div>
+<%= render 'banner' %>
+<div class="row blog-main">    
+  <%= render 'sidebar' %>
+  <div class="medium-9 columns blog-article">
+
+      <div class="row top">
+
+        <div class="small-5 medium-6 columns">
+          <span class="hide-lang", id="hideTW">隱藏中文</span>
+          <span class="hide-lang", id="hideJP">隱藏日文</span>
+        </div>
+        <div class="small-7 medium-5 large-3 columns nav">
+          <% 
+            nav_html = ""
+            @prev_post=Blog.where(:id.gt =>  @blog.id).asc(:id).limit(1)
+            @prev_post.each do |pp|
+          
+              nav_html += "<span id=\"nav-prev\">#{ link_to '←上一篇', blog_path(pp) }</span>"
+          
+            end
+          
+           
+            @next_post=Blog.where(:id.lt =>  @blog.id).desc(:id).limit(1)
+            @next_post.each do |nn|
+          
+              nav_html += "<span id=\"nav-next\">#{link_to '下一篇→', blog_path(nn)}</span>"
+          
+            end
+          %>
+          <%= nav_html.html_safe %>
+        </div>
+      </div>
+      <% if user_signed_in? %>
+        <% if current_user.has_role? :admin %>
+          <div><%= link_to '修改', edit_blog_path(@blog) %><%= link_to '刪除', @blog, method: :delete, data: { confirm: '確定嗎？' } , style: "margin-left:20px;"%></div>
+        <% end %>
+      <% end %> 
+      <div class="title"><%= @blog.title.html_safe %></div>
+      <div class="meta">
+        <div class="date"><%= @blog.dt %></div>
+      </div>
+      <div class="article"><%= @blog.content.html_safe %></div>
+        
+        <div class="origin">原文：<%= link_to @blog.url, @blog.url, target: "_blank" %></div>
+        <div class="bottom"><div class="nav"><%= nav_html.html_safe %></div> </div>
+
+      <div class="comments">
+        <h3>留言</h3>
+        <div class="fb-comments" data-href="<%= request.original_url %>" data-numposts="5" data-colorscheme="light"></div>
+        <div id="comment-form">
+          <%= simple_form_for @new_comment, :remote => true do |form| %>
+            <%#= form.error_notification %>
+            <%= form.input :name, label: '名稱',:label_html => {:id => "label-name"}%>
+            <%= form.input :content, as: :text , label: false%>
+            <%= form.input :blog_id, :as => :hidden, :value => @blog.id %>
+            <%= form.button :submit, '留言', class: 'submit' %>
+          <% end %>
+        </div>
+        <div id="show-comments">
+          <%= render :partial => 'comments/comment', :collection => @comments, :as => :comment %>
+        </div>
+      </div>
+  </div>
+</div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=442300939204197";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

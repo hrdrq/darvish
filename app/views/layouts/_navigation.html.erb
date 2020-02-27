@@ -1,0 +1,64 @@
+<nav class="tab-bar show-for-small">
+  <section class="left-small">
+    <a class="left-off-canvas-toggle menu-icon" ><span>Darvish</span></a>
+  </section>
+<% if params[:controller]=='blogs' %>
+  <section class="right-small">
+    <a class="right-off-canvas-toggle menu-icon" ><span></span></a>
+  </section>
+<% end %>
+</nav>
+<nav class="top-bar hide-for-small" data-topbar>
+  <ul class="title-area">
+    <li class="name">
+      <h1><%= link_to 'Darvish', root_path %></h1>
+    </li>
+  </ul>
+  <section class="top-bar-section">
+    <ul class="right">
+      <li class="divider"></li>
+      <li><%= link_to '簡介', page_path('intro') %></li>
+      <li class="divider"></li>
+      <li><%= link_to '數據', records_path %></li>
+      <li class="divider"></li>
+      <li><%= link_to '網誌', blogs_path %></li>
+      <li class="divider"></li>
+      <% if user_signed_in? %>
+        <li>
+        <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+        </li>
+        <% if !Rails.env.production? %>
+          <li class="divider"></li>
+          <li>
+          <%= link_to('Edit account', edit_user_registration_path) %>
+          </li>
+        <% end %>
+        <% if current_user.has_role? :admin %>
+          <li>
+          <%#= link_to('Admin', users_path) %> Admin
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </section>
+</nav>
+<aside class="left-off-canvas-menu">
+  <ul class="off-canvas-list">
+    <li><label class="first">Darvish</label></li>
+    <li><%= link_to '首頁', root_path %></li>
+    <li><%= link_to '簡介', page_path('intro') %></li>
+    <li><%= link_to '數據', records_path %></li>
+    <li><%= link_to '網誌', blogs_path %></li>
+  </ul>
+</aside>
+<aside class="right-off-canvas-menu">
+  <ul class="off-canvas-list">
+    <li><label>網誌目錄</label></li>
+    <% 2014.downto 2008 do |year| %>
+        <li><%= link_to "#{year}年", blogs_year_path(year) %></li>
+    <% end %>      
+    <li><%= link_to "訂閱網誌", "http://feeds.feedburner.com/darvishtw", target: "_blank" %></li>
+  </ul>
+</aside>
+<a class="exit-off-canvas"></a>
+

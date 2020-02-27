@@ -1,0 +1,549 @@
+$gray-color: #DDDDDB; //facebook is: rgba(190, 190, 190, .2)
+.blog-main {
+	
+	.blog-article {
+		margin: 15px 0 15px 0px;
+		@media screen and (min-width: 641px) { 
+			border-left: 4px solid $gray-color;
+		}
+			
+
+		t {
+		    display: block;
+		}
+		.top {
+			margin: 15px 0 15px 0px;
+			.columns {
+				padding-left: 0;
+			}
+			.hide-lang {
+				padding: 8px 13px 7px 13px;
+				background: #4090BA;
+				color: white ;
+				font-size: .8em;
+				cursor: pointer ;
+				cursor: hand;
+				@media only screen and (max-width:470px) {
+					padding: 4px 5px 4px 6px;
+					display: inline-table;
+					width:38px;
+					line-height: 1.2;
+				}
+			}
+			.hide-lang:hover {
+				background: #3981A7;
+			}
+			.hide-lang.disabled {
+				background-color: #ccc;
+				color: #555;
+			}
+			
+		}
+		.nav {
+			@media only screen and (max-width:470px) {
+				padding-top: 8px;
+			}
+			a {
+				font-weight: bold;
+				padding-bottom: 2px;
+				border-bottom: 1px solid $gray-color;
+			}
+			a:hover {
+				color: #3B8DBD;
+				border-bottom: 1px solid #b1b1b1;
+			}
+
+			#nav-prev {
+				margin-right: 5px;
+			}
+		}
+		.title {
+			margin-top: 24px;
+			padding-top: 24px;
+			border-top: 22px solid $gray-color;
+			font-size: 3em;
+			font-weight: bold;
+			@media only screen and (max-width:40em) {
+				font-size: 2em;
+				border-top: 8px solid $gray-color;
+			}	
+			.jp {
+				margin-right: 10px;
+			}
+		}
+		.meta {
+			margin: 15px 0 15px 0px;
+			color: #3B8DBD;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.origin {
+			background: $gray-color;
+			padding: 10px 3px 9px 7px;
+			margin-bottom: 10px;
+		}
+		.bottom {
+			margin-top: 20px;
+			padding: 0 15px 0 15px;
+			#nav-next {
+				float:right;
+			}
+		}
+	}
+	.blog-list {
+		margin: 15px 0 15px 0px;
+		@media screen and (min-width: 641px) {
+			border-left: 4px solid $gray-color;
+		}
+
+		.blog-list-article {
+			margin: 5px;
+
+			.entry-title {
+				font-size: 3em;
+				font-weight: bold;
+				letter-spacing: 5px;
+				border-top: 14px solid $gray-color;
+				padding-top: 15px;
+				@media only screen and (max-width:40em) {
+					border-top: 8px solid $gray-color;
+					font-size: 2em;
+					letter-spacing: 0;
+				}
+
+				a {
+					color: #222222;;
+				}
+				a:hover {
+					color: #D24D33;
+
+				}
+			}
+			.entry-meta {
+				color: #3B8DBD;
+				font-size: 18px;
+				margin:18px 0 28px 0;
+
+			}
+			.entry-content {
+				color: #666;
+				font-size: 22px;
+				p {
+					margin-top: -14px;
+				}
+			}
+
+		}
+	}
+	.blog-list, .blog-article {
+		padding-bottom: 15px;
+	}
+
+	.blog-sidebar {
+		margin: 20px 0 15px 0;
+		padding: 15px;
+
+		border-radius: 4px;
+
+		a {
+			display: block;
+			padding: 10px;
+			color: #D24D33;
+			font-size: x-large;
+			text-align: center;
+
+			
+		}
+		a:hover {
+			color: #33383D;
+		}
+	}
+
+	.pagination {
+		background: #33363B;
+		color: #FFF;
+		padding: 20px 14px 38px 10px;
+		margin-top: 50px;
+		height: 50px;
+		border-radius: 4px;
+
+
+		.page {
+			
+			margin: 2px 0 5px 5px;
+			
+			
+			
+			a {
+				background: #25272A;
+				color: #FFF;
+				padding: 8px 7px 7px 6px;
+				height: 15px;
+				border-radius: 3px;
+				text-align: center;
+			}
+		}
+		.page.current {
+			@extend .page;
+			background: #FFF;
+			color: #3B8DBD;
+			padding: 8px 7px 7px 6px;
+			height: 15px;
+			border-radius: 3px;
+			text-align: center;
+		}
+		.first, .last {
+			@extend .page;
+			a {
+				color: #D24D33;
+			}
+			@media only screen and (max-width:470px) {
+				display: none;
+			}
+		}
+		.prev, .next {
+			@extend .page;
+			a {
+				color: #D24D33;
+				padding: 6px 5px 5px 4px;
+			}
+		}
+		.first:hover, .prev:hover, .next:hover, .last:hover, .page:not(.gap):hover {
+			
+			a {
+				background: #FFF;
+				color: #3B8DBD;
+			}
+		}
+		.gap {
+			@media only screen and (max-width:50em) {
+				display: none;
+			}
+		}
+	}
+}
+.continue-reading {
+	margin-bottom: 26px;
+	a {
+		font-size: .8em;
+		line-height: 1;
+		font-weight: 100;
+		border-color: none;
+		background: #94cce1;
+		padding: 8px 12px 9px 13px;
+		border-radius: 3px;
+		color: #FFF;
+	}
+	a:hover {
+
+		color: #FFF;
+		background: #8ac6dd;
+	}
+}
+.comments {
+	margin-top: 30px;
+	@media only screen and (min-width: 40.063em) {
+		width: 90%;
+		padding-left: 2%;
+	}
+	h3 {
+		font-weight: bold;
+	}
+	.fb-comments {
+		margin-top: 2px;
+	}
+	.fb-comments, .fb-comments iframe[style], .fb-like-box, .fb-like-box iframe[style] {width: 100% !important;}
+	.fb-comments span, .fb-comments iframe span[style], .fb-like-box span, .fb-like-box iframe span[style] {width: 100% !important;}
+	
+	#comment-form {
+		padding: 0 2px 4px 2px;
+		div.comment_name {
+			display: table-cell;
+   			vertical-align: middle;
+   			padding: 0 0 10px 4px ;
+			abbr {
+				display: none;
+			}
+			#label-name {
+				float: left;
+				margin: 0 10px 0 0;
+				font-size: 1.1em;
+			}
+			input#comment_name {
+				padding:0;
+				padding: 5px;
+				margin: 0;
+				height: 1.8em;
+				width: 7em;
+				float: left;
+			}
+		}
+		textarea#comment_content {
+			height: 5em;
+			margin-bottom: 0;
+		}
+		input.submit {
+			padding: 2px 11px 1px 11px;
+		}
+
+	}
+	#show-comments {
+		padding: 10px 2px 2px 2px;
+		.comment-header {
+			padding: 8px;
+
+			background: $gray-color;
+			.comment-name {
+				font-size: 1.3em;
+				font-weight: bolder;
+			}
+			.comment-time {
+				margin-top: 5px;
+				font-size: 0.8em;
+				color: gray;
+			}
+		}
+		.comment-content {
+			margin-bottom: 8px;
+			border-style: solid; border-width: 0 2px 2px 2px;
+			padding: 14px;
+			border-color: $gray-color;
+			line-height: 1.5em;
+			font-size: 0.9em;
+		}
+	}
+}
+
+/*
+div.blog .jp , div.blog p:nth-child(n+6){
+	display:none;
+}*/
+div.blog a>t {
+	margin-right: 10px;
+	font-size:2em;
+}
+div.blog.home-blog a>t {
+	margin-right: 10px;
+	font-size:1.4em;
+}
+div.blog t{
+	margin : 12px 0px 15px 0px;
+}
+
+
+
+%char {
+	
+	background-repeat:no-repeat;
+	margin-left:4px; 
+	padding-left:16px; 
+  
+}
+onpu {
+	@extend %char;
+	background-image: image-url("onpu.gif");
+}
+nihihi {
+	@extend %char;
+	background-image: image-url("nihihi.gif");
+}
+niko {
+	@extend %char;
+	background-image: image-url("niko.gif");
+}
+up {
+	@extend %char;
+	background-image: image-url("up.gif");
+}
+shock {
+	@extend %char;
+	background-image: image-url("shock.gif");
+}
+punch {
+	@extend %char;
+	background-image: image-url("punch.gif");
+}
+ase {
+	@extend %char;
+	background-image: image-url("ase.gif");
+}
+aseru {
+	@extend %char;
+	background-image: image-url("aseru.gif");
+}
+down {
+	@extend %char;
+	background-image: image-url("down.gif");
+}
+beda {
+	@extend %char;
+	background-image: image-url("beda.gif");
+}
+exc {
+	@extend %char;
+	background-image: image-url("exc.gif");
+}
+gan {
+	@extend %char;
+	background-image: image-url("gan.gif");
+}
+love {
+	@extend %char;
+	background-image: image-url("love.gif");
+}
+shobon {
+	@extend %char;
+	background-image: image-url("shobon.gif");
+}
+good {
+	@extend %char;
+	background-image: image-url("good.gif");
+}
+hare {
+	@extend %char;
+	background-image: image-url("hare.gif");
+}
+koinoya {
+	@extend %char;
+	background-image: image-url("koinoya.gif");
+}
+ame {
+	@extend %char;
+	background-image: image-url("ame.gif");
+}
+pa {
+	@extend %char;
+	background-image: image-url("pa.gif");
+}
+dash {
+	@extend %char;
+	background-image: image-url("dash.gif");
+}
+kao {
+	@extend %char;
+	background-image: image-url("kao.gif");
+}
+bikuri {
+	@extend %char;
+	background-image: image-url("bikuri.gif");
+}
+crack {
+	@extend %char;
+	background-image: image-url("crack.gif");
+}
+me {
+	@extend %char;
+	background-image: image-url("me.gif");
+}
+hatena {
+	@extend %char;
+	background-image: image-url("hatena.gif");
+}
+mu {
+	@extend %char;
+	background-image: image-url("mu.gif");
+}
+gokaku {
+	@extend %char;
+	background-image: image-url("gokaku.gif");
+}
+choki {
+	@extend %char;
+	background-image: image-url("choki.gif");
+}
+rocket {
+	@extend %char;
+	background-image: image-url("rocket.gif");
+}
+mera {
+	@extend %char;
+	background-image: image-url("mera.gif");
+}
+gugu {
+	@extend %char;
+	background-image: image-url("gugu.gif");
+}
+yuki {
+	@extend %char;
+	background-image: image-url("yuki.gif");
+}
+doki {
+	@extend %char;
+	background-image: image-url("doki.gif");
+}
+kesho {
+	@extend %char;
+	background-image: image-url("kesho.gif");
+}
+heartbreak {
+	@extend %char;
+	background-image: image-url("heartbreak.gif");
+}
+lovelove {
+	@extend %char;
+	background-image: image-url("lovelove.gif");
+}
+excque {
+	@extend %char;
+	background-image: image-url("excque.gif");
+}
+muka {
+	@extend %char;
+	background-image: image-url("muka.gif");
+}
+bomb {
+	@extend %char;
+	background-image: image-url("bomb.gif");
+}
+don {
+	@extend %char;
+	background-image: image-url("don.gif");
+}
+kiss {
+	@extend %char;
+	background-image: image-url("kiss.gif");
+}
+hirameki {
+	@extend %char;
+	background-image: image-url("hirameki.gif");
+}
+dokuro {
+	@extend %char;
+	background-image: image-url("dokuro.gif");
+}
+oyobi {
+	@extend %char;
+	background-image: image-url("oyobi.gif");
+}
+pun {
+	@extend %char;
+	background-image: image-url("pun.gif");
+}
+sira {
+	@extend %char;
+	background-image: image-url("sira.gif");
+}
+et {
+	@extend %char;
+	background-image: image-url("et.gif");
+}
+kaze {
+	@extend %char;
+	background-image: image-url("kaze.gif");
+}
+tokuige {
+	@extend %char;
+	background-image: image-url("tokuige.gif");
+}
+mimi {
+	@extend %char;
+	background-image: image-url("mimi.gif");
+}
+guu {
+	@extend %char;
+	background-image: image-url("guu.gif");
+}
+asi {
+	@extend %char;
+	background-image: image-url("asi.gif");
+}

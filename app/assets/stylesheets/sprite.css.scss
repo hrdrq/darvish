@@ -1,0 +1,65 @@
+%sprite {
+  background: image-url("sprite.png") no-repeat 0 0;
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), 
+  only screen and (min-device-pixel-ratio: 2) {
+    background: image-url("sprite@2x.png") no-repeat 0 0;
+    background-size: 40px 410px; 
+  }
+}
+
+%hide-detail {
+  @extend %sprite;
+  width: 20px;
+  height: 20px;
+  text-indent: -999em;
+  display: inline-block;
+  margin: 0 6px 0 0;
+}
+//height add 10px y add 5px
+.hide-detail span {
+  @extend %hide-detail;
+  background-position: 0 0px;
+}
+.hide-detail:hover span {
+  @extend %hide-detail;
+  background-position: 0 -30px;
+}
+.hide-detail.clicked span {
+  @extend %hide-detail;
+  background-position: 0 -360px;
+}
+.hide-detail.clicked:hover span {
+  @extend %hide-detail;
+  background-position: 0 -390px;
+}
+
+
+%social {
+  @extend %sprite;
+  width: 50px;
+  height: 50px;
+}
+
+footer {
+  #twitter {
+    @extend %social;
+    background-position: 0 -310px;
+  }
+  #twitter:hover {
+    background-position: 0 -260px;
+  }
+  #fb {
+    @extend %social;
+    background-position: 0 -110px;
+  }
+  #fb:hover {
+    background-position: 0 -60px;
+  }
+  #rss {
+    @extend %social;
+    background-position: 0 -210px;
+  }
+  #rss:hover {
+    background-position: 0 -160px;
+  }
+}

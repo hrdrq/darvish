@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dt: 2013-11-25
+  opp: MyString
+  home: false
+  start: false
+  cg: false
+  sho: false
+  sv: false
+  svo: false
+  ip: 1
+  ip_f: 1
+  hit: 1
+  run: 1
+  er: 1
+  hr: 1
+  hb: 1
+  bb: 1
+  ibb: 1
+  so: 1
+  np: 1
+  np_s: 1
+
+two:
+  dt: 2013-11-25
+  opp: MyString
+  home: false
+  start: false
+  cg: false
+  sho: false
+  sv: false
+  svo: false
+  ip: 1
+  ip_f: 1
+  hit: 1
+  run: 1
+  er: 1
+  hr: 1
+  hb: 1
+  bb: 1
+  ibb: 1
+  so: 1
+  np: 1
+  np_s: 1

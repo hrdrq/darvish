@@ -1,0 +1,8 @@
+<div class="medium-3 columns hide-for-small">
+    <div class = "blog-sidebar">
+ 	<% 2014.downto 2008 do |year| %>
+    	<%= link_to "#{year}年", blogs_year_path(year) %>
+    <% end %>
+    <%= link_to "訂閱網誌", "http://feeds.feedburner.com/darvishtw", target: "_blank" %>
+  </div>
+</div>

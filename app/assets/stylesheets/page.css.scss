@@ -1,0 +1,35 @@
+.view-pages {
+	margin: 70px 0 240px 0;
+	h2 {
+		margin-bottom: 18px;
+	}
+	p {
+		margin-bottom:8px ;
+	}
+	
+	.content {
+		background: white;
+		padding: 10px;
+		margin-bottom: 20px;
+		border-style: solid;
+		border-width: 1px;
+		border-color: #d9d9d9;
+		p {
+			text-indent: 2em;
+			margin:10px 8px;
+		}
+		h4 {
+			font-weight: bold;
+		}
+	}
+}
+
+#pages-copyright {
+	margin-bottom: 300px;
+}
+#pages-about {
+	margin-bottom: 320px;
+}
+#pages-intro {
+	margin-bottom: 0;
+}
