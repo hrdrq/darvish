@@ -47,7 +47,7 @@ end
 
 gem 'high_voltage', '~> 2.1.0'
 gem 'foundation-rails', "~> 5.0.2.0"
-gem "mongoid", '4.0.0'
+gem "mongoid", '5.2'
 gem "bson_ext", "~> 1.5.1" 		
 
 gem 'kaminari', "~> 0.15.0" 	
