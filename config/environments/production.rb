@@ -87,4 +87,5 @@ Darvish::Application.configure do
     password: ENV["GMAIL_PASSWORD"]
   }
   config.assets.precompile += %w( ck.js )
+  config.asset_sync.enabled = false
 end
