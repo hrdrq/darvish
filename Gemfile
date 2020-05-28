@@ -50,7 +50,7 @@ gem 'foundation-rails', "~> 5.0.2.0"
 gem "mongoid", '5.2'
 gem "bson_ext", "~> 1.5.1" 		
 
-gem 'kaminari', "~> 0.15.0" 	
+gem 'kaminari', "~> 1.2.1" 	
 
 gem 'nokogiri', "~> 1.10.8" 
 gem 'jquery-turbolinks', "~> 2.0.1" 
